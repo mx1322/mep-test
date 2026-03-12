@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <title>Agentforce (Français)</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: #111;
+        background: #fff;
+      }
+      main {
+        max-width: 800px;
+        padding: 48px 20px;
+        margin: 0 auto;
+      }
+      a {
+        color: inherit;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="./">← Accueil</a></p>
+      <h1 style="font-size: 20px; margin: 16px 0;">Agentforce (Test Français)</h1>
+      <p>La bulle de chat devrait apparaître en bas à droite (Mode : <code>fr</code>).</p>
+      <p id="em-status" style="font-size: 12px; color: #555;">Statut : chargement…</p>
+    </main>
+
+    <script type="text/javascript">
+      function setStatus(msg) {
+        var el = document.getElementById("em-status");
+        if (el) el.textContent = "Statut Embedded Messaging : " + msg;
+      }
+
+    function initEmbeddedMessaging() {
+      try {
+        const languageCode = "fr"; // Or "en_US", dynamically set this variable
+    
+        // 1. Set the UI Language (Buttons, Labels)
+        embeddedservice_bootstrap.settings.language = languageCode; 
+    
+        // 2. Pass the Language to the Agent (Hidden Field)
+        // IMPORTANT: "EndUserLanguage" must match the Custom Parameter name from Step 2
+        embeddedservice_bootstrap.settings.extraPrechatFormDetails = [{
+            "label": "EndUserLanguage",
+            "value": languageCode,
+            "displayToAgent": true
+        }];
+    
+        // OR, if you use the newer Pre-Chat API (recommended for MIAW):
+        window.addEventListener("onEmbeddedMessagingReady", () => {
+            embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+                "EndUserLanguage": languageCode,
+                "End_User_Language": "fr"
+            });
+        });
+    
+        embeddedservice_bootstrap.init(
+          "00DDT000000Xzto",
+          "Airlight_Pro_Agentforce",
+          "https://lorealusa--cccai.sandbox.my.site.com/ESWAirlightProAgentforc1759935699067",
+          {
+            scrt2URL: "https://lorealusa--cccai.sandbox.my.salesforce-scrt.com",
+          }
+        );
+      } catch (err) {
+        console.error("Error loading Embedded Messaging: ", err);
+      }
+    }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://lorealusa--cccai.sandbox.my.site.com/ESWAirlightProAgentforc1759935699067/assets/js/bootstrap.min.js"
+      onload="setStatus('Bootstrap chargé, initialisation…'); initEmbeddedMessaging()"
+      onerror="setStatus('Échec du chargement de bootstrap.min.js')"
+    ></script>
+  </body>
+</html>
